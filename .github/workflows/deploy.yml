@@ -25,7 +25,6 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no -i private_key.pem -r ubuntu@13.203.58.181:/full-stack-app-with-react-rest-api/client/build ./build
 
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
