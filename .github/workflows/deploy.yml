@@ -19,7 +19,7 @@ jobs:
 
       - name: Debug EC2 Build Directory
         run: |
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@13.203.58.181"ls -la /path/to/build"
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@13.203.58.181 "ls -la /"
 
       - name: Copy build folder from EC2
         run: |
