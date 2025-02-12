@@ -33,8 +33,8 @@ jobs:
           aws-region: us-east-1
 
       - name: Sync files to S3
-        run: aws s3 sync ./build s3://pradhumna-cdn --delete
+        run: aws s3 sync ./build s3://pradhumna-cdn/cdn --delete
 
       - name: Invalidate CloudFront cache
         run: |
-          aws cloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths "/*"
+          aws cloudfront create-invalidation --distribution-id E2DT4H7SW7LG39 --paths "/*"
