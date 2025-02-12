@@ -32,7 +32,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Sync files to S3
-        run: aws s3 sync ./build s3://your-s3-bucket-name --delete
+        run: aws s3 sync ./build s3://pradhumna-cdn --delete
 
       - name: Invalidate CloudFront cache
         run: |
