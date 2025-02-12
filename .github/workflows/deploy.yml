@@ -24,7 +24,7 @@ jobs:
             git config --global credential.helper 'cache --timeout=3600' &&
             git config --global user.email 'github-actions@github.com' &&
             git config --global user.name 'GitHub Actions' &&
-            git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/your-username/your-repo.git main &&
+            git pull https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/niharkushwah/full-stack-app-with-react-rest-api.git main &&
             cd client &&
             npm install &&
             npm run build
