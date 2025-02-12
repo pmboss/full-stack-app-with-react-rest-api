@@ -23,7 +23,8 @@ jobs:
 
       - name: Copy build folder from EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i private_key.pem -r ec2-user@your-ec2-ip:/path/to/build ./build
+          scp -o StrictHostKeyChecking=no -i private_key.pem -r ubuntu@13.203.58.181:/path/to/build ./build
+
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
