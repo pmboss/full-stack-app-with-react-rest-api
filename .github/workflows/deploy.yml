@@ -17,6 +17,19 @@ jobs:
           echo "${{ secrets.AWS_SSH_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
 
+      - name: Pull latest changes and build on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@13.203.58.181 "
+            cd ~/full-stack-app-with-react-rest-api &&
+            git config --global credential.helper 'cache --timeout=3600' &&
+            git config --global user.email 'github-actions@github.com' &&
+            git config --global user.name 'GitHub Actions' &&
+            git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/your-username/your-repo.git main &&
+            cd client &&
+            npm install &&
+            npm run build
+          "
+
       - name: Debug EC2 Build Directory
         run: |
           ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@13.203.58.181 "ls -la /"
