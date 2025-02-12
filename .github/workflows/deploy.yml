@@ -12,17 +12,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Ensure AWS CLI is installed
+      - name: Set up SSH key
         run: |
-          if aws --version; then
-            echo "AWS CLI is already installed."
-          else
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
-          fi
+          echo "${{ secrets.AWS_SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
 
+      - name: Debug EC2 Build Directory
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@your-ec2-ip "ls -la /path/to/build"
 
+      - name: Copy build folder from EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -i private_key.pem -r ec2-user@your-ec2-ip:/path/to/build ./build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -32,7 +33,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Sync files to S3
-        run: aws s3 sync ./public s3://pradhumna-cdn --delete
+        run: aws s3 sync ./build s3://pradhumna-cdn --delete
 
       - name: Invalidate CloudFront cache
         run: |
