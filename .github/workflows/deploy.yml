@@ -36,7 +36,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy to S3
-        run: aws s3 sync ./client/build s3://pradhumna-cdn/cdn --delete
+        run: aws s3 sync ./client/build s3://pradhumna-cdn/cdn
 
       - name: Invalidate CloudFront cache
         run: aws cloudfront create-invalidation --distribution-id E2DT4H7SW7LG39 --paths "/*"
