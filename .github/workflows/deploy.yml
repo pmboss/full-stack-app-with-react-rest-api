@@ -24,30 +24,12 @@ jobs:
             git config --global credential.helper 'cache --timeout=3600' &&
             git config --global user.email 'github-actions@github.com' &&
             git config --global user.name 'GitHub Actions' &&
+            git checkout main &&
             git pull https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/niharkushwah/full-stack-app-with-react-rest-api.git main &&
             cd client &&
+            ls &&
             npm install &&
-            npm run build
+            npm run build &&
+            aws s3 sync ./build s3://pradhumna-cdn/cdn &&
+            aws cloudfront create-invalidation --distribution-id E2DT4H7SW7LG39 --paths "/*"
           "
-
-      - name: Debug EC2 Build Directory
-        run: |
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@13.203.58.181 "ls -la /"
-
-      - name: Copy build folder from EC2
-        run: |
-          scp -o StrictHostKeyChecking=no -i private_key.pem -r ubuntu@13.203.58.181:~/full-stack-app-with-react-rest-api/client/build ./build
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Sync files to S3
-        run: aws s3 sync ./build s3://pradhumna-cdn/cdn --delete
-
-      - name: Invalidate CloudFront cache
-        run: |
-          aws cloudfront create-invalidation --distribution-id E2DT4H7SW7LG39 --paths "/*"
