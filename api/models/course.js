@@ -32,6 +32,15 @@ module.exports = (sequelize) => {
         }
       }
     },
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isUrl: {
+          msg: "Invalid image URL."
+        }
+      }
+    },    
     estimatedTime: {
       type: DataTypes.STRING
     },
