@@ -1,5 +1,7 @@
 const config = {
-  apiBaseUrl: 'http://13.203.58.181:5000/api',
+  apiBaseUrl: 'https://pradhumna.goclever.in/api',
+  // apiBaseUrl: 'http://courses-env.eba-zi8y2zph.ap-south-1.elasticbeanstalk.com/api',
+  // apiBaseUrl: 'http://localhost:8080/api',  
 };
 
 export default config;

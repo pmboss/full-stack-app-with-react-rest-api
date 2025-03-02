@@ -19,7 +19,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "bd": "npm run build && npm run deploy",
+    "deploy": "npm run sync-s3 && npm run invalidation",
+    "sync-s3": "aws s3 sync ./build/ s3://courses-react/production/build/",
+    "invalidation": "aws cloudfront list-distributions --query 'DistributionList.Items[*].Id' --output text | xargs -I {} aws cloudfront create-invalidation --distribution-id {} --paths '/*'"
   },
   "eslintConfig": {
     "extends": [
